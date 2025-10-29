@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+{% block title %}Customer Reviews – Arihant Granites{% endblock %}
+{% block content %}
+<!-- Hero Section for Reviews -->
+<section class="relative py-20 bg-gradient-to-br from-amber-900 via-yellow-800 to-amber-700 overflow-hidden">
+  <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+  <div class="container mx-auto px-4 relative z-10 text-center">
+    <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in-up">
+      <span class="bg-gradient-to-r from-yellow-300 to-yellow-100 bg-clip-text text-transparent">
+        Customer Reviews
+      </span>
+    </h1>
+    <p class="text-xl text-yellow-100 max-w-2xl mx-auto animate-fade-in-up-delay">
+      Hear what our valued customers say about our premium granite products and exceptional service
+    </p>
+  </div>
+  <!-- Floating Stars -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
+</section>
+
+<section class="py-16 container mx-auto px-4">
+  
+  <!-- Review Form -->
+  <div class="max-w-2xl mx-auto mb-12">
+    <div class="kesariya-card p-8 reveal">
+      <h2 class="kesariya-title text-3xl mb-6 text-center">Share Your Experience</h2>
+      
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="mb-6 p-4 bg-green-100 text-green-800 rounded-lg border-l-4 border-green-500 animate-fade-in-up">
+            {% for message in messages %}
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      
+      <form method="post" id="review-form" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="form-group">
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+            <input type="text" id="name" name="name" required
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300"
+                   placeholder="Your full name">
+            <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+            <input type="email" id="email" name="email" required
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300"
+                   placeholder="your.email@example.com">
+            <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+          <input type="tel" id="phone" name="phone" required
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300"
+                 placeholder="+91 98765 43210">
+          <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+        </div>
+        
+        <div class="form-group">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Rating *</label>
+          <div class="flex space-x-2 mb-2">
+            <input type="radio" id="star5" name="stars" value="5" class="hidden">
+            <label for="star5" class="star-rating cursor-pointer text-3xl text-gray-300 hover:text-yellow-400 transition-colors duration-200">⭐</label>
+            
+            <input type="radio" id="star4" name="stars" value="4" class="hidden">
+            <label for="star4" class="star-rating cursor-pointer text-3xl text-gray-300 hover:text-yellow-400 transition-colors duration-200">⭐</label>
+            
+            <input type="radio" id="star3" name="stars" value="3" class="hidden">
+            <label for="star3" class="star-rating cursor-pointer text-3xl text-gray-300 hover:text-yellow-400 transition-colors duration-200">⭐</label>
+            
+            <input type="radio" id="star2" name="stars" value="2" class="hidden">
+            <label for="star2" class="star-rating cursor-pointer text-3xl text-gray-300 hover:text-yellow-400 transition-colors duration-200">⭐</label>
+            
+            <input type="radio" id="star1" name="stars" value="1" class="hidden">
+            <label for="star1" class="star-rating cursor-pointer text-3xl text-gray-300 hover:text-yellow-400 transition-colors duration-200">⭐</label>
+          </div>
+          <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Review *</label>
+          <textarea id="message" name="message" rows="5" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300 resize-none"
+                    placeholder="Tell us about your experience with Arihant Granite..."></textarea>
+          <div class="text-sm text-gray-500 mt-1">Minimum 10 characters required</div>
+          <div class="error-message text-red-500 text-sm mt-1 hidden"></div>
+        </div>
+        
+        <button type="submit" class="w-full kesariya-btn text-lg py-4 relative overflow-hidden">
+          <span class="relative z-10 flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+            </svg>
+            Submit Review
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Display Reviews -->
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for review in reviews %}
+    <div class="kesariya-card p-6">
+      <div class="flex items-center mb-3">
+        <div class="flex text-yellow-400">
+          {% for i in range(review[1]) %}
+            <span>⭐</span>
+          {% endfor %}
+        </div>
+        <span class="ml-2 text-sm text-gray-600">{{ review[3] }}</span>
+      </div>
+      <p class="text-gray-700 mb-3">"{{ review[2] }}"</p>
+      <div class="text-sm font-semibold text-yellow-800">— {{ review[0] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  
+  {% if not reviews %}
+  <div class="text-center text-gray-600 reveal">
+    <p>No reviews yet. Be the first to share your experience!</p>
+  </div>
+  {% endif %}
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Star Rating System
+    const starInputs = document.querySelectorAll('input[name="stars"]');
+    const starLabels = document.querySelectorAll('.star-rating');
+    
+    starLabels.forEach((label, index) => {
+        label.addEventListener('click', function() {
+            const rating = index + 1;
+            updateStarDisplay(rating);
+        });
+        
+        label.addEventListener('mouseenter', function() {
+            const rating = index + 1;
+            highlightStars(rating);
+        });
+    });
+    
+    document.querySelector('.form-group').addEventListener('mouseleave', function() {
+        const checkedStar = document.querySelector('input[name="stars"]:checked');
+        if (checkedStar) {
+            updateStarDisplay(parseInt(checkedStar.value));
+        } else {
+            clearStars();
+        }
+    });
+    
+    function updateStarDisplay(rating) {
+        clearStars();
+        for (let i = 0; i < rating; i++) {
+            starLabels[i].classList.add('text-yellow-400');
+            starLabels[i].classList.remove('text-gray-300');
+        }
+    }
+    
+    function highlightStars(rating) {
+        clearStars();
+        for (let i = 0; i < rating; i++) {
+            starLabels[i].classList.add('text-yellow-400');
+            starLabels[i].classList.remove('text-gray-300');
+        }
+    }
+    
+    function clearStars() {
+        starLabels.forEach(label => {
+            label.classList.add('text-gray-300');
+            label.classList.remove('text-yellow-400');
+        });
+    }
+    
+    // Form Validation
+    const form = document.getElementById('review-form');
+    const inputs = form.querySelectorAll('input, textarea');
+    
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            validateField(this);
+        });
+        
+        input.addEventListener('input', function() {
+            clearError(this);
+        });
+    });
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let isValid = true;
+        inputs.forEach(input => {
+            if (!validateField(input)) {
+                isValid = false;
+            }
+        });
+        
+        // Check if rating is selected
+        const ratingSelected = document.querySelector('input[name="stars"]:checked');
+        if (!ratingSelected) {
+            showError(document.querySelector('.form-group'), 'Please select a rating');
+            isValid = false;
+        }
+        
+        if (isValid) {
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<span class="loading-spinner w-5 h-5 mr-2"></span>Submitting...';
+            submitBtn.disabled = true;
+            
+            // Submit form
+            form.submit();
+        }
+    });
+    
+    function validateField(field) {
+        const value = field.value.trim();
+        const fieldName = field.name;
+        let isValid = true;
+        let errorMessage = '';
+        
+        // Clear previous errors
+        clearError(field);
+        
+        if (field.hasAttribute('required') && !value) {
+            errorMessage = `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)} is required`;
+            isValid = false;
+        } else if (fieldName === 'email' && value && !isValidEmail(value)) {
+            errorMessage = 'Please enter a valid email address';
+            isValid = false;
+        } else if (fieldName === 'phone' && value && !isValidPhone(value)) {
+            errorMessage = 'Please enter a valid phone number';
+            isValid = false;
+        } else if (fieldName === 'message' && value && value.length < 10) {
+            errorMessage = 'Review must be at least 10 characters long';
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            showError(field, errorMessage);
+        }
+        
+        return isValid;
+    }
+    
+    function showError(field, message) {
+        const formGroup = field.closest('.form-group');
+        const errorDiv = formGroup.querySelector('.error-message');
+        errorDiv.textContent = message;
+        errorDiv.classList.remove('hidden');
+        field.classList.add('border-red-500');
+    }
+    
+    function clearError(field) {
+        const formGroup = field.closest('.form-group');
+        const errorDiv = formGroup.querySelector('.error-message');
+        errorDiv.classList.add('hidden');
+        field.classList.remove('border-red-500');
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function isValidPhone(phone) {
+        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+        return phoneRegex.test(phone.replace(/\s/g, ''));
+    }
+    
+    // Scroll reveal animation
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    });
+    
+    reveals.forEach(reveal => {
+        revealObserver.observe(reveal);
+    });
+});
+</script>
+{% endblock %}

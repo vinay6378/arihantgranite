@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Admin Contacts – Arihant Granites{% endblock %}
+{% block content %}
+<section class="py-16 container mx-auto px-4">
+  <div class="admin-contacts">
+    <h1 class="kesariya-title text-2xl mb-6 text-center">Contact Submissions</h1>
+    
+    {% if contacts %}
+    <div class="overflow-x-auto">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contacts %}
+          <tr>
+            <td>{{ contact[0] }}</td>
+            <td>{{ contact[1] }}</td>
+            <td>{{ contact[2] }}</td>
+            <td>{{ contact[3] }}</td>
+            <td>{{ contact[4] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-center text-gray-600">No contact submissions yet.</p>
+    {% endif %}
+    
+    <div class="mt-6 text-center">
+      <a href="/admin/upload" class="kesariya-btn">Upload Images</a>
+      <a href="/" class="ml-4 text-yellow-700 hover:text-yellow-800">Back to Home</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

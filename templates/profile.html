@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Arihant Granite{% endblock %}
+
+{% block content %}
+<!-- Profile Hero Section -->
+<section class="py-16 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-600 text-white">
+  <div class="container mx-auto px-4 text-center">
+    <h1 class="text-4xl font-bold mb-4">My Profile</h1>
+    <p class="text-xl text-yellow-100">Manage your account information and preferences</p>
+  </div>
+</section>
+
+<!-- Profile Content -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Profile Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="kesariya-card p-6 sticky top-8">
+            <div class="text-center mb-6">
+              <div class="w-24 h-24 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full flex items-center justify-center text-3xl text-white mx-auto mb-4">
+                {{ user[2][0] if user[2] else 'U' }}
+              </div>
+              <h3 class="text-xl font-bold text-gray-800">{{ user[2] or 'User' }}</h3>
+              <p class="text-gray-600">@{{ user[0] }}</p>
+            </div>
+            
+            <div class="space-y-4">
+              <a href="#profile-info" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                <span class="w-6 h-6 mr-3">👤</span>
+                <span>Profile Information</span>
+              </a>
+              <a href="#account-settings" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                <span class="w-6 h-6 mr-3">⚙️</span>
+                <span>Account Settings</span>
+              </a>
+              <a href="#order-history" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                <span class="w-6 h-6 mr-3">📦</span>
+                <span>Order History</span>
+              </a>
+              <a href="#favorites" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                <span class="w-6 h-6 mr-3">❤️</span>
+                <span>Favorites</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Profile Content -->
+        <div class="lg:col-span-2">
+          <!-- Profile Information -->
+          <div id="profile-info" class="kesariya-card p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+              <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3">👤</span>
+              Profile Information
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                <div class="p-3 bg-gray-50 rounded-lg border">{{ user[2] or 'Not provided' }}</div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <div class="p-3 bg-gray-50 rounded-lg border">{{ user[0] }}</div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <div class="p-3 bg-gray-50 rounded-lg border">{{ user[1] }}</div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <div class="p-3 bg-gray-50 rounded-lg border">{{ user[3] or 'Not provided' }}</div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Member Since</label>
+                <div class="p-3 bg-gray-50 rounded-lg border">{{ user[4][:10] if user[4] else 'Unknown' }}</div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Account Type</label>
+                <div class="p-3 bg-gray-50 rounded-lg border">
+                  {% if session.is_admin %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                      Admin
+                    </span>
+                  {% else %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      Customer
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-6">
+              <button class="kesariya-btn" onclick="editProfile()">Edit Profile</button>
+            </div>
+          </div>
+          
+          <!-- Account Settings -->
+          <div id="account-settings" class="kesariya-card p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+              <span class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 mr-3">⚙️</span>
+              Account Settings
+            </h2>
+            
+            <div class="space-y-6">
+              <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <h3 class="font-semibold text-gray-800">Change Password</h3>
+                  <p class="text-sm text-gray-600">Update your account password</p>
+                </div>
+                <button class="kesariya-btn" onclick="changePassword()">Change</button>
+              </div>
+              
+              <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <h3 class="font-semibold text-gray-800">Email Notifications</h3>
+                  <p class="text-sm text-gray-600">Manage your notification preferences</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" checked>
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+                </label>
+              </div>
+              
+              <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <h3 class="font-semibold text-gray-800">Two-Factor Authentication</h3>
+                  <p class="text-sm text-gray-600">Add an extra layer of security</p>
+                </div>
+                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors duration-300">Enable</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Order History -->
+          <div id="order-history" class="kesariya-card p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+              <span class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-3">📦</span>
+              Order History
+            </h2>
+            
+            <div class="text-center py-12">
+              <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-4xl text-gray-400 mx-auto mb-4">
+                📦
+              </div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-2">No Orders Yet</h3>
+              <p class="text-gray-600 mb-6">You haven't placed any orders yet. Start exploring our granite collection!</p>
+              <a href="{{ url_for('explore') }}" class="kesariya-btn">Browse Granite Collection</a>
+            </div>
+          </div>
+          
+          <!-- Favorites -->
+          <div id="favorites" class="kesariya-card p-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+              <span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 mr-3">❤️</span>
+              Favorite Granite
+            </h2>
+            
+            <div class="text-center py-12">
+              <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-4xl text-gray-400 mx-auto mb-4">
+                ❤️
+              </div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-2">No Favorites Yet</h3>
+              <p class="text-gray-600 mb-6">Save your favorite granite varieties for easy access later!</p>
+              <a href="{{ url_for('explore') }}" class="kesariya-btn">Explore Granite Collection</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 relative m-4">
+    <button onclick="closeEditProfileModal()" class="absolute top-2 right-2 text-2xl text-gray-500 hover:text-gray-700">&times;</button>
+    
+    <h3 class="text-2xl font-bold mb-6">Edit Profile</h3>
+    
+    <form id="editProfileForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+        <input type="text" id="editFullName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" value="{{ user[2] or '' }}">
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+        <input type="tel" id="editPhone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" value="{{ user[3] or '' }}">
+      </div>
+      
+      <div class="flex space-x-4 pt-4">
+        <button type="button" onclick="closeEditProfileModal()" class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors duration-300">Cancel</button>
+        <button type="submit" class="flex-1 kesariya-btn">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function editProfile() {
+  document.getElementById('editProfileModal').classList.remove('hidden');
+}
+
+function closeEditProfileModal() {
+  document.getElementById('editProfileModal').classList.add('hidden');
+}
+
+function changePassword() {
+  alert('Password change functionality will be implemented soon!');
+}
+
+// Close modal when clicking outside
+document.getElementById('editProfileModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeEditProfileModal();
+  }
+});
+
+// Handle edit profile form submission
+document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const fullName = document.getElementById('editFullName').value.trim();
+  const phone = document.getElementById('editPhone').value.trim();
+  
+  if (!fullName) {
+    alert('Full name is required');
+    return;
+  }
+  
+  // Here you would typically send the data to the server
+  alert('Profile updated successfully! (This is a demo - changes are not saved)');
+  closeEditProfileModal();
+});
+</script>
+{% endblock %}

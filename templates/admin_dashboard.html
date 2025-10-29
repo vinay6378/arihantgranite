@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Arihant Granites{% endblock %}
+
+{% block content %}
+<!-- Admin Dashboard Header -->
+<section class="py-16 bg-gradient-to-br from-gray-900 via-amber-900 to-yellow-800 text-white">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-4xl font-bold mb-4">Admin Dashboard</h1>
+        <p class="text-xl text-yellow-100">Welcome back, {{ session.full_name or 'Admin' }}!</p>
+      </div>
+      <div class="text-right">
+        <div class="text-sm text-yellow-200">Last Login</div>
+        <div class="text-lg font-semibold">{{ moment().format('MMMM Do YYYY') }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Statistics Cards -->
+<section class="py-12 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="kesariya-card p-6 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-2xl text-white mx-auto mb-4">
+          👥
+        </div>
+        <div class="text-3xl font-bold text-gray-800 mb-2">{{ stats.total_users }}</div>
+        <div class="text-gray-600">Total Users</div>
+      </div>
+      
+      <div class="kesariya-card p-6 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-2xl text-white mx-auto mb-4">
+          📞
+        </div>
+        <div class="text-3xl font-bold text-gray-800 mb-2">{{ stats.total_contacts }}</div>
+        <div class="text-gray-600">Contact Inquiries</div>
+      </div>
+      
+      <div class="kesariya-card p-6 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-2xl text-white mx-auto mb-4">
+          ⭐
+        </div>
+        <div class="text-3xl font-bold text-gray-800 mb-2">{{ stats.total_reviews }}</div>
+        <div class="text-gray-600">Customer Reviews</div>
+      </div>
+      
+      <div class="kesariya-card p-6 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-2xl text-white mx-auto mb-4">
+          📊
+        </div>
+        <div class="text-3xl font-bold text-gray-800 mb-2">{{ stats.avg_rating }}</div>
+        <div class="text-gray-600">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Actions -->
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-8">Quick Actions</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <a href="{{ url_for('admin_contacts') }}" class="kesariya-card p-6 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl text-blue-600 mx-auto mb-4">
+          📋
+        </div>
+        <h3 class="text-xl font-semibold mb-2">View Contacts</h3>
+        <p class="text-gray-600">Manage customer inquiries and messages</p>
+      </a>
+      
+      <a href="{{ url_for('admin_upload') }}" class="kesariya-card p-6 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl text-green-600 mx-auto mb-4">
+          📤
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Upload Images</h3>
+        <p class="text-gray-600">Add new granite images to the gallery</p>
+      </a>
+      
+      <a href="{{ url_for('reviews') }}" class="kesariya-card p-6 text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-2xl text-yellow-600 mx-auto mb-4">
+          💬
+        </div>
+        <h3 class="text-xl font-semibold mb-2">View Reviews</h3>
+        <p class="text-gray-600">Monitor customer feedback and ratings</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Recent Activity -->
+<section class="py-12 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Recent Contacts -->
+      <div class="kesariya-card p-6">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3">📞</span>
+          Recent Contacts
+        </h3>
+        <div class="space-y-4">
+          {% for contact in recent_contacts %}
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div>
+              <div class="font-semibold text-gray-800">{{ contact[0] }}</div>
+              <div class="text-sm text-gray-600">{{ contact[1] }}</div>
+            </div>
+            <div class="text-sm text-gray-500">{{ contact[2][:10] }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-4 text-center">
+          <a href="{{ url_for('admin_contacts') }}" class="text-amber-600 hover:text-amber-700 font-semibold">
+            View All Contacts →
+          </a>
+        </div>
+      </div>
+      
+      <!-- Recent Reviews -->
+      <div class="kesariya-card p-6">
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+          <span class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 mr-3">⭐</span>
+          Recent Reviews
+        </h3>
+        <div class="space-y-4">
+          {% for review in recent_reviews %}
+          <div class="p-4 bg-gray-50 rounded-lg">
+            <div class="flex items-center justify-between mb-2">
+              <div class="font-semibold text-gray-800">{{ review[0] }}</div>
+              <div class="flex text-yellow-500">
+                {% for i in range(review[1]) %}
+                  <span>⭐</span>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="text-sm text-gray-600 mb-2">{{ review[2][:100] }}{% if review[2]|length > 100 %}...{% endif %}</div>
+            <div class="text-xs text-gray-500">{{ review[3][:10] }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-4 text-center">
+          <a href="{{ url_for('reviews') }}" class="text-amber-600 hover:text-amber-700 font-semibold">
+            View All Reviews →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- System Status -->
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="kesariya-card p-8">
+      <h3 class="text-2xl font-bold mb-6 text-center">System Status</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-2xl text-green-600 mx-auto mb-4">
+            ✅
+          </div>
+          <h4 class="text-lg font-semibold mb-2">Database</h4>
+          <p class="text-gray-600">Online & Healthy</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-2xl text-green-600 mx-auto mb-4">
+            ✅
+          </div>
+          <h4 class="text-lg font-semibold mb-2">File System</h4>
+          <p class="text-gray-600">All Images Accessible</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-2xl text-green-600 mx-auto mb-4">
+            ✅
+          </div>
+          <h4 class="text-lg font-semibold mb-2">Authentication</h4>
+          <p class="text-gray-600">Secure & Active</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
