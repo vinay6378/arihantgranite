@@ -170,7 +170,6 @@ pyttsx3==2.90
 pytweening==1.2.0
 pytz==2025.2
 pywebview==6.0
-pywin32==311
 pywin32-ctypes==0.2.3
 pywinpty==3.0.2
 PyYAML==6.0.3
