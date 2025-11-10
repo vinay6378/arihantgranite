@@ -150,16 +150,16 @@ def home():
         featured.append({
             'title': clean_name,
             'image': f'/static/img/Arihant/{fname}',
-            'category': 'Arihant Collection',
+            'category': 'Biege & Creme Collection',
             'description': description,
-            'price_range': '₹' + str(random.randint(80, 200)) + ' - ₹' + str(random.randint(200, 500)) + ' per sq ft'
+           
         })
 
     # Dynamic testimonials with more variety
     testimonials = [
         {"text": "The quality and finish of Arihant's granite is unmatched. Our home looks stunning!", "author": "Priya S., Chennai", "rating": 5},
         {"text": "Professional service and beautiful granite. Highly recommended for any project.", "author": "Ramesh K., Bangalore", "rating": 5},
-        {"text": "Arihant Granite's team helped us choose the perfect stone for our hotel lobby.", "author": "Hotel Grand, Madurai", "rating": 5},
+        {"text": "Arihant Granites team helped us choose the perfect stone for our hotel lobby.", "author": "Hotel Grand, Madurai", "rating": 5},
         {"text": "Excellent quality and timely delivery. The Kashmir Gold looks amazing in our living room!", "author": "Anita M., Delhi", "rating": 5},
         {"text": "Great variety and competitive prices. Very satisfied with our purchase.", "author": "Rajesh P., Mumbai", "rating": 4},
         {"text": "The Imperial Gold granite transformed our office reception area completely.", "author": "Corporate Client, Hyderabad", "rating": 5}
@@ -211,7 +211,20 @@ def explore():
         'Millenium Ivory Gold': 'Gold Collection',
         'Shiva Gold': 'Gold Collection',
         'Shiva Ivory Pink': 'Pink Collection',
-        'Vegas Gold': 'Gold Collection'
+        'Vegas Gold': 'Gold Collection',
+        'Olivia Green': 'Premium Series & Others',
+        'Royal Pink':'Pink Collection',
+        'Millenium':'White Collection',
+        'Mani White':'White Collection',
+        'Ghibli Ivory':'White Collection',
+        'Flamingo Pink':'Pink Collection',
+        'Colombo Jubarna':'Premium Series & Others',
+        'Classic Ivory':'Premium Series & Others',
+        'Bhama Ivory Pink':'Pink Collection',
+        'Astoria Ivory':'White Collection',
+        'Astoria': 'Premium Series & Others'
+
+        
     }
     
     if os.path.exists(img_dir):
@@ -220,14 +233,14 @@ def explore():
                 base_name = os.path.splitext(fname)[0]
                 clean_name = base_name.replace('_', ' ').replace('-', ' ').title()
                 description = granite_descriptions.get(clean_name, f'Premium {clean_name} granite from Arihant\'s exclusive collection.')
-                category = granite_categories.get(clean_name, 'Arihant Collection')
+                category = granite_categories.get(clean_name, 'Biege & Creme Collection')
                 
                 listings.append({
                     'title': clean_name,
                     'image': f'/static/img/Arihant/{fname}',
                     'category': category,
                     'description': description,
-                    'price_range': '₹' + str(random.randint(80, 200)) + ' - ₹' + str(random.randint(200, 500)) + ' per sq ft',
+                   
                     'availability': 'In Stock' if random.choice([True, True, True, False]) else 'Limited Stock',
                     'thickness': random.choice(['2cm', '3cm', '2-3cm']),
                     'finish': random.choice(['Polished', 'Honed', 'Leathered', 'Brushed'])
